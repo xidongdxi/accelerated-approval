@@ -33,7 +33,7 @@ ggplot(data, aes(x = rho, y = p_F, group = r)) +
                      expand = c(0.01, 0.01)) +
   scale_linetype_manual(values=c("solid", "longdash", "dotdash", "dotted"))+
   xlab("Correlation between ORR and OS") +
-  ylab("Futility boundary pH for ORR") +
+  ylab("Futility boundary p_F for ORR") +
   guides(linetype = guide_legend(title = "Information\nfraction of OS",
                                  position = "inside")) +
   theme(legend.title = element_text(size = 10),
