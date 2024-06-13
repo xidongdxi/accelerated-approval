@@ -1,5 +1,6 @@
 library(mvtnorm)
 library(ggplot2)
+library(latex2exp)
 
 source("/accelerated-approval/functions.R")
 
@@ -32,13 +33,13 @@ ggplot(data, aes(x = rho, y = p_F, group = r)) +
                      limits = c(0, 1),
                      expand = c(0.01, 0.01)) +
   scale_linetype_manual(values=c("solid", "longdash", "dotdash", "dotted"))+
-  xlab("Correlation between ORR and OS") +
-  ylab("Futility boundary p_F for ORR") +
-  guides(linetype = guide_legend(title = "Information\nfraction of OS",
+  xlab(TeX(r'(Correlation  $\rho$  between ORR and OS)')) +
+  ylab(TeX(r'(Futility $p$-value boundary  $p_F$  for ORR)')) +
+  guides(linetype = guide_legend(title = paste("Information\nfraction ", TeX(r'($r$)'), " of OS"),
                                  position = "inside")) +
   theme(legend.title = element_text(size = 10),
         legend.text = element_text(size = 10),
-        legend.position.inside = c(0.85, 0.79),
+        legend.position.inside = c(0.85, 0.75),
         legend.key.width = unit(2, 'cm'),
         axis.text = element_text(size = 10),
         axis.title = element_text(size = 13))
@@ -57,8 +58,8 @@ for (i in 1:length(r)) {
   orr_t[i] <- uniroot(orr_fun, c(0, 1), orr_c = orr_c, nper = nper, alpha = p_F[i])$root
 }
 rbind(r = formatC(r, format = "f", digits = 1),
-      p_F = formatC(p_F, format = "f", digits = 4),
-      diff = formatC(round((orr_t - orr_c) / (orr_t_0.025 - orr_c) *100, 0), format = "f", digits = 0)
+      p_F = formatC(p_F, format = "f", digits = 3),
+      diff = paste0(formatC(round((orr_t - orr_c) / (orr_t_0.025 - orr_c) *100, 0), format = "f", digits = 0), "%")
 )
 
 # Table 2 of the futility boundary for the success boundary 0.005
@@ -75,8 +76,8 @@ for (i in 1:length(r)) {
   orr_t[i] <- uniroot(orr_fun, c(0, 1), orr_c = orr_c, nper = nper, alpha = p_F[i])$root
 }
 rbind(r = formatC(r, format = "f", digits = 1),
-      p_F = formatC(p_F, format = "f", digits = 4),
-      diff = formatC(round((orr_t - orr_c) / (orr_t_0.025 - orr_c) *100, 0), format = "f", digits = 0)
+      p_F = formatC(p_F, format = "f", digits = 3),
+      diff = paste0(formatC(round((orr_t - orr_c) / (orr_t_0.025 - orr_c) *100, 0), format = "f", digits = 0), "%")
 )
 
 # Table 2 of the futility boundary for the success boundary 0.0125
@@ -93,8 +94,8 @@ for (i in 1:length(r)) {
   orr_t[i] <- uniroot(orr_fun, c(0, 1), orr_c = orr_c, nper = nper, alpha = p_F[i])$root
 }
 rbind(r = formatC(r, format = "f", digits = 1),
-      p_F = formatC(p_F, format = "f", digits = 4),
-      diff = formatC(round((orr_t - orr_c) / (orr_t_0.025 - orr_c) *100, 0), format = "f", digits = 0)
+      p_F = formatC(p_F, format = "f", digits = 3),
+      diff = paste0(formatC(round((orr_t - orr_c) / (orr_t_0.025 - orr_c) *100, 0), format = "f", digits = 0), "%")
 )
 
 
